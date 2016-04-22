@@ -87,8 +87,13 @@ class NavBarContent extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.route !== this.props.route) {
-      this.state.opacity.setValue(this.props.willDisappear ? 1 : 0);
-      this.doAnimation();
+      if (newProps.route.headerStyle && this.props.route.headerStyle &&
+          newProps.route.headerStyle.backgroundColor && this.props.route.headerStyle.backgroundColor &&
+          newProps.route.headerStyle.backgroundColor !== this.props.route.headerStyle.backgroundColor)
+      {
+        this.state.opacity.setValue(this.props.willDisappear ? 1 : 0);
+        this.doAnimation();
+      }
     } else if (newProps.route === this.props.route) {
       this.state.opacity.setValue(1);
     }
@@ -173,11 +178,11 @@ class NavBarContent extends React.Component {
       );
     } else if (this.props.route.index > 0) {
       leftCornerContent = (
-        <NavButton
-          onPress={this.goBack}
-          backButtonComponent={this.props.backButtonComponent}
-          {...this.props.route.backButtonProps}
-        />
+        <NavButton onPress={this.goBack } backButtonComponent={ () => {
+          const BackButton = this.props.backButtonComponent;
+          const backButtonProps = this.props.route.backButtonProps || {};
+          return <BackButton {...backButtonProps} />;
+        }} />
       );
     }
 
