@@ -86,15 +86,7 @@ class NavBarContent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.route !== this.props.route) {
-      if (newProps.route.headerStyle && this.props.route.headerStyle &&
-          newProps.route.headerStyle.backgroundColor && this.props.route.headerStyle.backgroundColor &&
-          newProps.route.headerStyle.backgroundColor !== this.props.route.headerStyle.backgroundColor)
-      {
-        this.state.opacity.setValue(this.props.willDisappear ? 1 : 0);
-        this.doAnimation();
-      }
-    } else if (newProps.route === this.props.route) {
+    if (newProps.route === this.props.route) {
       this.state.opacity.setValue(1);
     }
   }
